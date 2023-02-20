@@ -1,5 +1,7 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
+import '../../models/category_model.dart';
 import '../../widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -7,8 +9,8 @@ class HomeScreen extends StatelessWidget {
 
   static Route route() {
     return MaterialPageRoute(
-      settings: RouteSettings(name: routeName),
-      builder: (_) => HomeScreen(),
+      settings: const RouteSettings(name: routeName),
+      builder: (_) => const HomeScreen(),
     );
   }
 
@@ -21,7 +23,20 @@ class HomeScreen extends StatelessWidget {
         title: 'Contoso E-comm',
         automaticallyImplyLeading: true,
       ),
-      bottomNavigationBar: CustomNavBar(),
+      bottomNavigationBar: const CustomNavBar(),
+      body: Container(
+        child: CarouselSlider(
+          options: CarouselOptions(
+            aspectRatio: 1.5,
+            viewportFraction: 0.9,
+            enlargeCenterPage: true,
+            enlargeStrategy: CenterPageEnlargeStrategy.height,
+          ),
+          items: Category.categories
+              .map((category) => HeroCarouselCard(category: category))
+              .toList(),
+        ),
+      ),
     );
   }
 }
