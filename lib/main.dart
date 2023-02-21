@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Contoso E-comm',
       theme: theme(),
       onGenerateRoute: AppRouter.onGenerateRoute,
       initialRoute: HomeScreen.routeName,
