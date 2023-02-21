@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../models/models.dart';
 import '../screens/screens.dart';
 
 class AppRouter {
@@ -11,9 +12,9 @@ class AppRouter {
       case CartScreen.routeName:
         return CartScreen.route();
       case CatalogScreen.routeName:
-        return CatalogScreen.route();
+        return CatalogScreen.route(category: settings.arguments as Category);
       case ProductScreen.routeName:
-        return CatalogScreen.route();
+        return ProductScreen.route();
       case WishlistScreen.routeName:
         return WishlistScreen.route();
       default:

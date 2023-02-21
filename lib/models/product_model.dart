@@ -173,5 +173,15 @@ class Product extends Equatable {
       isRecommended: false,
       isPopular: false,
     ),
+    Product(
+      id: '15',
+      name: 'Water #1',
+      category: 'Water',
+      imageUrl:
+          'https://images.unsplash.com/photo-1505252585461-04db1eb84625?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1552&q=80', //https://unsplash.com/photos/CrK843Pl9a4
+      price: 1.99,
+      isRecommended: false,
+      isPopular: false,
+    ),
   ];
 }
