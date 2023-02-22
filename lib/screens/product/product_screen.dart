@@ -1,6 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../blocs/blocs.dart';
 import '../../models/models.dart';
 import '../../widgets/widgets.dart';
 
@@ -9,7 +11,7 @@ class ProductScreen extends StatelessWidget {
 
   static Route route({required Product product}) {
     return MaterialPageRoute(
-      settings: RouteSettings(name: routeName),
+      settings: const RouteSettings(name: routeName),
       builder: (_) => ProductScreen(
         product: product,
       ),
@@ -41,9 +43,21 @@ class ProductScreen extends StatelessWidget {
                 onPressed: () {},
                 icon: const Icon(Icons.share, color: Colors.white),
               ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.favorite, color: Colors.white),
+              BlocBuilder<WishlistBloc, WishlistState>(
+                builder: (context, state) {
+                  return IconButton(
+                    onPressed: () {
+                      context
+                          .read<WishlistBloc>()
+                          .add(AddProductToWishlist(product));
+
+                      final snackBar =
+                          SnackBar(content: Text('Added to your Wishlist!'));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    },
+                    icon: const Icon(Icons.favorite, color: Colors.white),
+                  );
+                },
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
@@ -122,7 +136,8 @@ class ProductScreen extends StatelessWidget {
               children: [
                 ListTile(
                   title: Text(
-                    product.descripton ?? 'Lorem Ipsum',
+                    product.descripton ??
+                        'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.',
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                 )
