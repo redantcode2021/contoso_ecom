@@ -1,3 +1,4 @@
+import 'package:contoso_ecom/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../models/models.dart';
@@ -9,6 +10,8 @@ class AppRouter {
     switch (settings.name) {
       case HomeScreen.routeName:
         return HomeScreen.route();
+      case SplashScreen.routeName:
+        return SplashScreen.route();
       case CartScreen.routeName:
         return CartScreen.route();
       case CatalogScreen.routeName:
