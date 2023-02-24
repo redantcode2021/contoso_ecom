@@ -1,5 +1,6 @@
-import 'package:contoso_ecom/models/models.dart';
+import 'package:contoso_ecom/blocs/blocs.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../widgets/widgets.dart';
 
@@ -41,130 +42,145 @@ class CartScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 20.0,
-          vertical: 10.0,
-        ),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  Cart().freeDeliveryString,
-                  style: Theme.of(context).textTheme.headline5,
-                ),
-                ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/');
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
-                      shape: const RoundedRectangleBorder(),
-                      elevation: 0,
-                    ),
-                    child: Text(
-                      "Add More Items",
-                      style: Theme.of(context).textTheme.headline5!.copyWith(
-                            color: Colors.white,
-                          ),
-                    ))
-              ],
+      body: BlocBuilder<CartBloc, CartState>(builder: (context, state) {
+        if (state is CartLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        if (state is CartLoaded) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20.0,
+              vertical: 10.0,
             ),
-            const SizedBox(height: 20),
-            SizedBox(
-              height: 375,
-              child: ListView.builder(
-                  itemCount: Cart().products.length,
-                  itemBuilder: (context, index) {
-                    return CartProductCard(product: Cart().products[index]);
-                  }),
-            ),
-            Column(
+            child: Column(
               children: [
-                const Divider(thickness: 2),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'SUBTOTAL',
-                        style: Theme.of(context).textTheme.headline5,
-                      ),
-                      Text(
-                        '\$${Cart().subtotalString}',
-                        style: Theme.of(context).textTheme.headline5,
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'DELIVERY FEE',
-                        style: Theme.of(context).textTheme.headline5,
-                      ),
-                      Text(
-                        '\$${Cart().deliveryFeeString}',
-                        style: Theme.of(context).textTheme.headline5,
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 10),
-                Stack(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: Colors.black.withAlpha(50),
+                    Text(
+                      state.cart.freeDeliveryString,
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/');
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.black,
+                        shape: const RoundedRectangleBorder(),
+                        elevation: 0,
+                      ),
+                      child: Text(
+                        "Add More Items",
+                        style: Theme.of(context).textTheme.headline5!.copyWith(
+                              color: Colors.white,
+                            ),
                       ),
                     ),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      margin: const EdgeInsets.all(5.0),
-                      height: 50,
-                      decoration: const BoxDecoration(
-                        color: Colors.black,
+                  ],
+                ),
+                const SizedBox(height: 20),
+                SizedBox(
+                  height: 375,
+                  child: ListView.builder(
+                    itemCount: state.cart.products.length,
+                    itemBuilder: (context, index) {
+                      return CartProductCard(
+                          product: state.cart.products[index]);
+                    },
+                  ),
+                ),
+                Column(
+                  children: [
+                    const Divider(thickness: 2),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'SUBTOTAL',
+                            style: Theme.of(context).textTheme.headline5,
+                          ),
+                          Text(
+                            '\$${state.cart.subtotalString}',
+                            style: Theme.of(context).textTheme.headline5,
+                          ),
+                        ],
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'TOTAL',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline5!
-                                  .copyWith(color: Colors.white),
-                            ),
-                            Text(
-                              '\$${Cart().totalString}',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline5!
-                                  .copyWith(color: Colors.white),
-                            ),
-                          ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'DELIVERY FEE',
+                            style: Theme.of(context).textTheme.headline5,
+                          ),
+                          Text(
+                            '\$${state.cart.deliveryFeeString}',
+                            style: Theme.of(context).textTheme.headline5,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Stack(
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 60,
+                          decoration: BoxDecoration(
+                            color: Colors.black.withAlpha(50),
+                          ),
                         ),
-                      ),
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          margin: const EdgeInsets.all(5.0),
+                          height: 50,
+                          decoration: const BoxDecoration(
+                            color: Colors.black,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'TOTAL',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline5!
+                                      .copyWith(color: Colors.white),
+                                ),
+                                Text(
+                                  '\$${state.cart.totalString}',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline5!
+                                      .copyWith(color: Colors.white),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ],
             ),
-          ],
-        ),
-      ),
+          );
+        }
+        return const Center(
+          child: Text('Something went wrong!'),
+        );
+      }),
     );
   }
 }

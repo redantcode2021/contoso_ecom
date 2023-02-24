@@ -1,3 +1,4 @@
+import 'package:contoso_ecom/app_bloc_observer.dart';
 import 'package:contoso_ecom/blocs/blocs.dart';
 import 'package:contoso_ecom/config/app_router.dart';
 import 'package:contoso_ecom/config/theme.dart';
@@ -7,6 +8,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'screens/screens.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = AppBlocObserver();
   runApp(const MyApp());
 }
 
@@ -19,6 +22,9 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (_) => WishlistBloc()..add(StartWishlist()),
+        ),
+        BlocProvider(
+          create: (_) => CartBloc()..add(LoadCart()),
         ),
       ],
       child: MaterialApp(
