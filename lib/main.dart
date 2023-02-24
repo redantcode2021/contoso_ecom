@@ -2,6 +2,7 @@ import 'package:contoso_ecom/app_bloc_observer.dart';
 import 'package:contoso_ecom/blocs/blocs.dart';
 import 'package:contoso_ecom/config/app_router.dart';
 import 'package:contoso_ecom/config/theme.dart';
+import 'package:contoso_ecom/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
         title: 'Contoso E-comm',
         theme: theme(),
         onGenerateRoute: AppRouter.onGenerateRoute,
-        initialRoute: HomeScreen.routeName,
+        initialRoute: SplashScreen.routeName,
         home: const HomeScreen(),
       ),
     );
