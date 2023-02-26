@@ -2,6 +2,8 @@ import 'package:contoso_ecom/app_bloc_observer.dart';
 import 'package:contoso_ecom/blocs/blocs.dart';
 import 'package:contoso_ecom/config/app_router.dart';
 import 'package:contoso_ecom/config/theme.dart';
+import 'package:contoso_ecom/repositories/category/category_repository.dart';
+import 'package:contoso_ecom/repositories/product/product_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -27,6 +29,20 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => CartBloc()..add(LoadCart()),
+        ),
+        BlocProvider(
+          create: (_) => CategoryBloc(
+            categoryRepository: CategoryRepository(),
+          )..add(
+              LoadCategories(),
+            ),
+        ),
+        BlocProvider(
+          create: (_) => ProductBloc(
+            productRepository: ProductRepository(),
+          )..add(
+              LoadProducts(),
+            ),
         ),
       ],
       child: MaterialApp(
