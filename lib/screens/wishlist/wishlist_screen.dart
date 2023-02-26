@@ -23,7 +23,7 @@ class WishlistScreen extends StatelessWidget {
         title: 'Wishlist',
         automaticallyImplyLeading: true,
       ),
-      bottomNavigationBar: const CustomNavBar(),
+      bottomNavigationBar: const CustomNavBar(screen: routeName),
       body: BlocBuilder<WishlistBloc, WishlistState>(builder: (context, state) {
         if (state is WishlistLoading) {
           return const Center(

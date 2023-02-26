@@ -25,7 +25,9 @@ class HomeScreen extends StatelessWidget {
         title: 'Contoso E-comm',
         automaticallyImplyLeading: true,
       ),
-      bottomNavigationBar: const CustomNavBar(),
+      bottomNavigationBar: const CustomNavBar(
+        screen: routeName,
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
