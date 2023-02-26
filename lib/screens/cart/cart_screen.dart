@@ -23,25 +23,7 @@ class CartScreen extends StatelessWidget {
         title: 'Cart',
         automaticallyImplyLeading: true,
       ),
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.black,
-        child: Container(
-          height: 70,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
-                onPressed: () {},
-                child: Text(
-                  'GO TO CHECKOUT',
-                  style: Theme.of(context).textTheme.headline3,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+      bottomNavigationBar: const CustomNavBar(screen: routeName),
       body: BlocBuilder<CartBloc, CartState>(builder: (context, state) {
         if (state is CartLoading) {
           return const Center(
@@ -103,87 +85,7 @@ class CartScreen extends StatelessWidget {
                     },
                   ),
                 ),
-                Column(
-                  children: [
-                    const Divider(thickness: 2),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'SUBTOTAL',
-                            style: Theme.of(context).textTheme.headline5,
-                          ),
-                          Text(
-                            '\$${state.cart.subtotalString}',
-                            style: Theme.of(context).textTheme.headline5,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'DELIVERY FEE',
-                            style: Theme.of(context).textTheme.headline5,
-                          ),
-                          Text(
-                            '\$${state.cart.deliveryFeeString}',
-                            style: Theme.of(context).textTheme.headline5,
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    Stack(
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: 60,
-                          decoration: BoxDecoration(
-                            color: Colors.black.withAlpha(50),
-                          ),
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          margin: const EdgeInsets.all(5.0),
-                          height: 50,
-                          decoration: const BoxDecoration(
-                            color: Colors.black,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'TOTAL',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline5!
-                                      .copyWith(color: Colors.white),
-                                ),
-                                Text(
-                                  '\$${state.cart.totalString}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline5!
-                                      .copyWith(color: Colors.white),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                const OrderSummary(),
               ],
             ),
           );

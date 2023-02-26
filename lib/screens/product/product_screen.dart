@@ -32,54 +32,9 @@ class ProductScreen extends StatelessWidget {
         title: product.name,
         automaticallyImplyLeading: true,
       ),
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.black,
-        child: Container(
-          height: 70,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.share, color: Colors.white),
-              ),
-              BlocBuilder<WishlistBloc, WishlistState>(
-                builder: (context, state) {
-                  return IconButton(
-                    onPressed: () {
-                      context
-                          .read<WishlistBloc>()
-                          .add(AddProductToWishlist(product));
-
-                      final snackBar =
-                          SnackBar(content: Text('Added to your Wishlist!'));
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    },
-                    icon: const Icon(Icons.favorite, color: Colors.white),
-                  );
-                },
-              ),
-              BlocBuilder<CartBloc, CartState>(
-                builder: (context, state) {
-                  return ElevatedButton(
-                    style:
-                        ElevatedButton.styleFrom(backgroundColor: Colors.white),
-                    onPressed: () {
-                      context.read<CartBloc>().add(
-                            AddProductToCart(product),
-                          );
-                      Navigator.pushNamed(context, '/cart');
-                    },
-                    child: Text(
-                      'ADD TO CART',
-                      style: Theme.of(context).textTheme.headline3,
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
+      bottomNavigationBar: CustomNavBar(
+        screen: routeName,
+        product: product,
       ),
       body: ListView(
         children: [

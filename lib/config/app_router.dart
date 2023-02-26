@@ -1,4 +1,3 @@
-import 'package:contoso_ecom/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../models/models.dart';
@@ -20,6 +19,8 @@ class AppRouter {
         return ProductScreen.route(product: settings.arguments as Product);
       case WishlistScreen.routeName:
         return WishlistScreen.route();
+      case CheckoutScreen.routeName:
+        return CheckoutScreen.route();
       default:
         return _errorRoute();
     }

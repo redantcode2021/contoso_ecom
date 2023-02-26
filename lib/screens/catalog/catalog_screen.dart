@@ -27,7 +27,7 @@ class CatalogScreen extends StatelessWidget {
           title: category.name,
           automaticallyImplyLeading: true,
         ),
-        bottomNavigationBar: const CustomNavBar(),
+        bottomNavigationBar: const CustomNavBar(screen: routeName),
         body: BlocBuilder<ProductBloc, ProductState>(
           builder: (context, state) {
             if (state is ProductLoading) {
