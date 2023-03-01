@@ -1,6 +1,5 @@
 import 'package:contoso_ecom/app_bloc_observer.dart';
 import 'package:contoso_ecom/blocs/blocs.dart';
-import 'package:contoso_ecom/blocs/checkout/checkout_bloc.dart';
 import 'package:contoso_ecom/config/app_router.dart';
 import 'package:contoso_ecom/config/theme.dart';
 import 'package:contoso_ecom/repositories/category/category_repository.dart';
@@ -58,7 +57,7 @@ class MyApp extends StatelessWidget {
         title: 'Contoso E-comm',
         theme: theme(),
         onGenerateRoute: AppRouter.onGenerateRoute,
-        initialRoute: SplashScreen.routeName,
+        initialRoute: OrderConfirmation.routeName,
         home: const HomeScreen(),
       ),
     );

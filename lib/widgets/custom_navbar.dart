@@ -36,6 +36,8 @@ class CustomNavBar extends StatelessWidget {
         return _buildNavbar(context);
       case '/wishlist':
         return _buildNavbar(context);
+      case '/order-confirmation':
+        return _buildNavbar(context);
       case '/product':
         return _buildAddToCartNavBar(context, product);
       case '/cart':
@@ -151,6 +153,8 @@ class CustomNavBar extends StatelessWidget {
                 context.read<CheckoutBloc>().add(
                       ConfirmCheckout(checkout: state.checkout),
                     );
+
+                Navigator.pushNamed(context, '/order-confirmation');
               },
               child: Text(
                 'ORDER NOW',
