@@ -133,16 +133,34 @@ class CustomNavBar extends StatelessWidget {
 
   List<Widget>? _buildOrderNowNavBar(context) {
     return [
-      ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.white,
-          shape: RoundedRectangleBorder(),
-        ),
-        onPressed: () {},
-        child: Text(
-          'ORDER NOW',
-          style: Theme.of(context).textTheme.headline3,
-        ),
+      BlocBuilder<CheckoutBloc, CheckoutState>(
+        builder: (context, state) {
+          if (state is CheckoutLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (state is CheckoutLoaded) {
+            return ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.white,
+                shape: const RoundedRectangleBorder(),
+              ),
+              onPressed: () {
+                context.read<CheckoutBloc>().add(
+                      ConfirmCheckout(checkout: state.checkout),
+                    );
+              },
+              child: Text(
+                'ORDER NOW',
+                style: Theme.of(context).textTheme.headline3,
+              ),
+            );
+          } else {
+            return const Center(child: Text('Something went wrong.'));
+          }
+        },
       ),
     ];
   }
