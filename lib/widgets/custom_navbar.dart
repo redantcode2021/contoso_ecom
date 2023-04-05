@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:contoso_ecom/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -120,7 +123,7 @@ class CustomNavBar extends StatelessWidget {
       ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.white,
-          shape: RoundedRectangleBorder(),
+          shape: const RoundedRectangleBorder(),
         ),
         onPressed: () {
           Navigator.pushNamed(context, '/checkout');
@@ -135,36 +138,63 @@ class CustomNavBar extends StatelessWidget {
 
   List<Widget>? _buildOrderNowNavBar(context) {
     return [
-      BlocBuilder<CheckoutBloc, CheckoutState>(
-        builder: (context, state) {
-          if (state is CheckoutLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-
-          if (state is CheckoutLoaded) {
-            return ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
-                shape: const RoundedRectangleBorder(),
-              ),
-              onPressed: () {
-                context.read<CheckoutBloc>().add(
-                      ConfirmCheckout(checkout: state.checkout),
-                    );
-
-                Navigator.pushNamed(context, '/order-confirmation');
-              },
-              child: Text(
-                'ORDER NOW',
-                style: Theme.of(context).textTheme.headline3,
-              ),
-            );
-          } else {
-            return const Center(child: Text('Something went wrong.'));
-          }
-        },
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          BlocBuilder<CheckoutBloc, CheckoutState>(
+            builder: (context, state) {
+              if (state is CheckoutLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.white,
+                  ),
+                );
+              }
+              if (state is CheckoutLoaded) {
+                if (state.paymentMethod == PaymentMethod.credit_card) {
+                  return Container(
+                    child: Text(
+                      'Pay with Credit Card',
+                      style: Theme.of(context).textTheme.headline4!.copyWith(
+                            color: Colors.white,
+                          ),
+                    ),
+                  );
+                }
+                if (Platform.isAndroid &&
+                    state.paymentMethod == PaymentMethod.google_pay) {
+                  return GooglePay(
+                    total: state.total!,
+                    products: state.products!,
+                  );
+                }
+                if (Platform.isIOS &&
+                    state.paymentMethod == PaymentMethod.apple_pay) {
+                  return ApplePay(
+                    total: state.total!,
+                    products: state.products!,
+                  );
+                } else {
+                  return ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/payment-selection');
+                    },
+                    child: Text(
+                      'CHOOSE PAYMENT',
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline3!
+                          .copyWith(color: Colors.white),
+                    ),
+                  );
+                }
+              } else {
+                return const Center(child: Text('Something went wrong.'));
+              }
+            },
+          ),
+        ],
       ),
     ];
   }

@@ -80,6 +80,44 @@ class CheckoutScreen extends StatelessWidget {
                           UpdateCheckout(zipCode: value),
                         );
                   }, context, 'Zip Code'),
+                  const SizedBox(height: 20),
+                  Container(
+                    height: 60,
+                    alignment: Alignment.bottomCenter,
+                    decoration: const BoxDecoration(color: Colors.black),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Center(
+                          child: TextButton(
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                context,
+                                'payment-selection',
+                              );
+                            },
+                            child: Text(
+                              'SELECT A PAYMENT METHOD',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline3!
+                                  .copyWith(
+                                    color: Colors.white,
+                                  ),
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.arrow_forward,
+                            color: Colors.white,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 10),
                   Text(
                     "ORDER SUMMARY",
                     style: Theme.of(context).textTheme.headline3,

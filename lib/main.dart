@@ -32,8 +32,12 @@ class MyApp extends StatelessWidget {
           create: (_) => CartBloc()..add(LoadCart()),
         ),
         BlocProvider(
+          create: (_) => PaymentBloc()..add(LoadPaymentMethod()),
+        ),
+        BlocProvider(
           create: (context) => CheckoutBloc(
             cartBloc: context.read<CartBloc>(),
+            paymentBloc: context.read<PaymentBloc>(),
             checkoutRepository: CheckoutRepository(),
           ),
         ),
@@ -57,7 +61,7 @@ class MyApp extends StatelessWidget {
         title: 'Contoso E-comm',
         theme: theme(),
         onGenerateRoute: AppRouter.onGenerateRoute,
-        initialRoute: OrderConfirmation.routeName,
+        initialRoute: SplashScreen.routeName,
         home: const HomeScreen(),
       ),
     );
